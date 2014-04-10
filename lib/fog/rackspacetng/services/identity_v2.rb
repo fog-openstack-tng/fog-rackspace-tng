@@ -8,6 +8,9 @@ module Fog
       requires   :rackspace_region
       recognizes :rackspace_auth_url
 
+      request_path 'fog/rackspacetng/requests/identity/v2'
+      request :create_token
+
       class Real < Fog::OpenStackCommon::IdentityV2::Real
         def initialize(options = {})
           @rax_options = options.dup
@@ -19,13 +22,6 @@ module Fog
           
           super options
         end
-
-        def request_params(params)
-          super.merge({
-            :path     => "v2.0/#{params[:path]}"
-          })
-        end
-
 
         def request_without_retry(params, parse_json = true)
           response = @service.request(request_params(params))
@@ -47,26 +43,6 @@ module Fog
               response.body = {}
             end
           end
-        end
-
-
-        def create_token(username, api_key)
-          binding.pry
-          data = {
-            'auth' => {
-              'RAX-KSKEY:apiKeyCredentials' => {
-                'username' => username,
-                'apiKey' => api_key
-              }
-            }
-          }
-
-          request_without_retry(
-            :body => Fog::JSON.encode(data),
-            :expects => [200, 203],
-            :method => 'POST',
-            :path => 'tokens'
-          )
         end
       end
     end
