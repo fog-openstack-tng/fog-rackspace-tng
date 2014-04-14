@@ -8,7 +8,7 @@ module Fog
       requires   :rackspace_region
       recognizes :rackspace_auth_url
 
-      request_path 'fog/rackspacetng/requests/identity/v2'
+      request_path "fog/rackspacetng/requests/identity/v2"
       request :create_token
 
       class Real < Fog::OpenStackCommon::IdentityV2::Real

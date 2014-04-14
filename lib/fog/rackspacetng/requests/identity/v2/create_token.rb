@@ -2,7 +2,7 @@ module Fog
   module RackspaceTng
     class IdentityV2
       class Real
-        def create_token(username, api_key)
+        def create_token(username, api_key, _)
           data = {
             'auth' => {
               'RAX-KSKEY:apiKeyCredentials' => {
