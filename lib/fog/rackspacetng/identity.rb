@@ -13,14 +13,12 @@ module Fog
       def self.new(options, connection_options = {})
         opts = options.dup  # dup options so no wonky side effects
         
-        service_discovery = Fog::OpenStackCommon::ServiceDiscovery.new(
+        Fog::OpenStackCommon::ServiceDiscovery.new(
           "identity", opts.merge(
             :connection_options => connection_options,
             :base_provider => Fog::RackspaceTng
           )
-        )
-
-        service_discovery.call
+        ).call
       end
     end
   end
